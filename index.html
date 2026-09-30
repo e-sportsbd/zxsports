@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#674FA3">
+<title>ZX SPORTS</title>
+<style>
+@font-face{font-family:Lato;src:url(assets/latoreg.ttf)}
+@font-face{font-family:Lato;font-weight:700;src:url(assets/lato_bold.ttf)}
+:root{--p:#674FA3;--bg:#0d0b14;--card:#1a1626;--tx:#f1eefb;--mu:#9d95b5;--ok:#2ecc71;--er:#ff5d5d}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Lato,system-ui,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;display:flex;justify-content:center}
+#app{width:100%;max-width:480px;min-height:100vh;position:relative;padding-bottom:70px}
+header{background:var(--p);padding:14px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:5}
+header img{width:34px;height:34px;border-radius:8px}header b{flex:1;font-size:18px}
+.bal{background:#0003;padding:6px 12px;border-radius:20px;font-size:14px;font-weight:700}
+main{padding:14px}
+.sl{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin-bottom:14px}
+.sl div{min-width:100%;scroll-snap-align:center;border-radius:14px;padding:22px 16px;background:linear-gradient(135deg,var(--p),#2b1d55);font-weight:700}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mode{border-radius:14px;overflow:hidden;background:var(--card);cursor:pointer;border:1px solid #ffffff10}
+.mode img{width:100%;aspect-ratio:1.4;object-fit:cover;display:block}
+.mode p{padding:8px;text-align:center;font-size:13px;font-weight:700}
+.card{background:var(--card);border-radius:14px;padding:14px;margin-bottom:12px;border:1px solid #ffffff10}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mu{color:var(--mu);font-size:13px}
+.tag{background:var(--p);border-radius:6px;padding:2px 8px;font-size:12px}
+.bar{height:6px;background:#ffffff18;border-radius:4px;margin:10px 0;overflow:hidden}.bar i{display:block;height:100%;background:var(--ok)}
+button,.btn{background:var(--p);color:#fff;border:0;border-radius:10px;padding:12px 16px;font:inherit;font-weight:700;width:100%;cursor:pointer}
+button.s{width:auto;padding:8px 16px}button.g{background:#ffffff14}button:disabled{opacity:.5}
+input,select{width:100%;padding:13px;margin:6px 0;border-radius:10px;border:1px solid #ffffff20;background:#110e1b;color:var(--tx);font:inherit}
+nav{position:fixed;bottom:0;width:100%;max-width:480px;background:#14101f;display:flex;border-top:1px solid #ffffff12;padding-bottom:env(safe-area-inset-bottom,0)}
+nav a{flex:1;text-align:center;padding:10px 0;font-size:11px;color:var(--mu);cursor:pointer}nav a b{display:block;font-size:20px}nav a.on{color:#b9a4ff}
+h3{margin:4px 0 12px}.c{text-align:center}.lg{width:96px;height:96px;border-radius:20px;margin:30px auto 10px;display:block}
+.back{background:none;width:auto;padding:0;color:#fff;font-size:22px}
+#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#000c;padding:10px 18px;border-radius:20px;display:none;z-index:9;font-size:14px}
+</style><style>
+:root{--p:#674FA3;--bg:#FEF7FF;--card:#fff;--tx:#000;--mu:#757575;--ok:#398E00;--er:#E53935}
+body{background:var(--bg);color:var(--tx)}
+#app{padding-bottom:20px}
+header{background:#FEF7FF;color:#000;height:56px;padding:0 14px;box-shadow:0 1px 4px #0002}
+header b{font-size:19px}header .ic{font-size:26px;cursor:pointer;width:30px}
+main{padding:12px}main.z{padding:0}
+.card{background:#fff;border:0;box-shadow:0 1px 5px #0002;border-radius:8px;color:#000}
+.mu{color:#757575}.tag{background:#F67C01;color:#fff;border-radius:4px}
+input,select{background:#fff;color:#000;border:1px solid #ccc}
+button.g{background:#EFEFEF;color:#000}.back{color:#000}
+h3{color:#000}
+.bar{background:#dcdcdc}.bar i{background:#674FA3}
+#toast{background:#000d;color:#fff}
+.sec{color:#49444E;font-weight:700;font-size:16px;margin:16px 0 10px;letter-spacing:.3px}
+.slw{background:#fff;box-shadow:0 2px 4px #0002}.sl2{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;height:200px}
+.sl2>img,.sl2>a{min-width:100%;height:200px;object-fit:cover;scroll-snap-align:center;display:block}
+.sl2>a>img{width:100%;height:100%;object-fit:cover;display:block}
+.sl-load{min-width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:#F3F0F7;color:#9E9E9E;font-weight:700}
+.dots{display:flex;justify-content:center;gap:6px;padding:8px 6px}.dots i{display:block;width:5px;height:5px;border-radius:50%;background:#9E9E9E;transition:width .4s}.dots i.on{width:16px;border-radius:4px;background:#FF8800}
+.notice{color:#E6882E;text-align:center;padding:10px 14px;font-weight:700;font-size:14px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 12px}
+.mc{background:#546F7A;border-radius:8px;overflow:hidden;cursor:pointer;box-shadow:0 1px 5px #0003}
+.mc img{width:100%;height:120px;object-fit:cover;display:block}
+.mc .l{background:#EFEFEF;padding:8px;text-align:center}.mc .l b{display:block;color:#000;font-size:14px}.mc .l span{color:#9E9E9E;font-size:12px}
+.topb{display:flex;align-items:center;gap:8px;height:60px;padding:0 12px;background:#FEF7FF;position:sticky;top:0;z-index:4}
+.topb b{flex:1;font-size:18px;color:#000}.topb img{width:26px;height:26px;cursor:pointer}
+.drw{position:fixed;inset:0;z-index:20;display:none}.drw.on{display:block}.drw .bk{position:absolute;inset:0;background:#0007}
+.drw .pn{position:absolute;left:0;top:0;bottom:0;width:78%;max-width:340px;background:#fff;overflow-y:auto}
+.dh{height:210px;background:#82 url(assets/recourse.jpg) center/cover;color:#fff;padding:22px 16px;position:relative;background-color:#528bb5}
+.dh img{width:65px;height:65px;border-radius:50%;object-fit:cover;border:2px solid #fff}.dh h3{color:#fff;margin:8px 0}
+.dh .st{position:absolute;left:0;right:0;bottom:10px;display:flex;text-align:center;font-size:12px}.dh .st div{flex:1}.dh .st b{display:block;font-size:16px}
+.mi{display:flex;align-items:center;gap:14px;height:54px;padding:0 16px;color:#000;cursor:pointer;border-bottom:1px solid #E0E0E0}.mi img{width:34px;height:34px}
+.mt{background:#fff;border-radius:8px;box-shadow:0 1px 5px #0002;margin-bottom:14px;overflow:hidden}
+.mt .a{padding:12px}.mt .h{display:flex;gap:10px;align-items:center}.mt .h img{width:47px;height:47px;border-radius:8px;object-fit:cover}
+.mt .bd{background:#F67C01;color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:14px;display:inline-block}
+.mt .tt{color:#424242;font-weight:700;font-size:14px;margin:3px 0}.mt .tm{color:#E53935;font-size:12px}
+.gr{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0}.gr small{display:block;color:#757575;font-size:11px;letter-spacing:.3px}.gr b{font-size:14px;color:#000}
+.pr{display:flex;align-items:center;gap:12px;margin-top:6px}.pr .bar{flex:1;margin:0;height:8px}
+.jb{border:1px solid #124595;color:#124595;border-radius:6px;padding:8px 22px;font-weight:700;background:none;width:auto;cursor:pointer}.jb:disabled{opacity:.45}
+.ex{display:flex;align-items:center;gap:8px;color:#124595;font-weight:700;font-size:14px;padding:10px 12px;border-top:1px solid #EFEFEF;cursor:pointer}.ex img{width:20px}.ex span{flex:1}
+.exb{padding:8px 14px 12px;background:#FAFAFA;font-size:14px}
+.tmr{background:#398E00;color:#fff;text-align:center;padding:8px;font-weight:700;font-size:14px}
+.wb{display:flex;align-items:center;gap:14px;padding:16px;background:#fff;border-radius:8px;box-shadow:0 1px 5px #0002;margin-bottom:12px}
+.wb img.i{width:44px;height:44px}.wb .x{flex:1}.wb small{color:#9E9E9E;font-weight:700;font-size:12px}.wb h2{font-size:22px;margin-top:2px}
+.pb{background:#674FA3;color:#fff;border:0;border-radius:6px;padding:10px 14px;font-weight:700;font-size:13px;width:auto;cursor:pointer}
+.ios-wrap{background:#F2F2F7;min-height:100vh;padding:calc(48px + env(safe-area-inset-top,0)) 22px 40px;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;box-sizing:border-box}
+.ios-logo{width:60px;height:60px;border-radius:15px;display:block;margin:0 auto 16px;box-shadow:0 6px 16px #674fa340;object-fit:cover}
+.ios-title{font-size:28px;font-weight:800;letter-spacing:-.02em;color:#1C1C1E;text-align:center;margin:0}
+.ios-sub{color:#8A8A8E;font-size:14px;text-align:center;margin-top:5px}
+.ios-seg{display:flex;background:#E4E3EA;border-radius:10px;padding:3px;margin:26px 0 18px;position:relative;height:38px}
+.ios-seg b{flex:1;text-align:center;line-height:32px;font-size:14px;font-weight:600;border-radius:8px;cursor:pointer;color:#6E6E73;z-index:1;font-family:inherit}
+.ios-seg b.on{color:#1C1C1E}
+.ios-seg i{position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);background:#fff;border-radius:8px;box-shadow:0 1px 3px #0002;transition:left .25s cubic-bezier(.4,0,.2,1)}
+.ios-card{background:#fff;border-radius:14px;box-shadow:0 1px 2px #0000000d}
+.ios-card .r{border-bottom:1px solid #E5E5EA}
+.ios-card .r:last-child{border-bottom:0}
+.ios-card input{width:100%;border:0;padding:15px 16px;font-size:16px;background:transparent;margin:0;border-radius:0;font-family:inherit;box-sizing:border-box}
+.ios-chk{display:flex;align-items:center;gap:9px;padding:13px 16px;font-size:13px;color:#6E6E73}
+.ios-chk input{width:auto!important;flex:none;margin:0!important}
+.ios-btn{width:100%;margin-top:22px;padding:16px;border:0;border-radius:14px;background:#674FA3;color:#fff;font-size:16px;font-weight:700;font-family:inherit;box-shadow:0 8px 18px #674fa345;cursor:pointer}
+.ios-btn:active{opacity:.85}
+.ios-link{display:block;text-align:center;color:#674FA3;font-size:14px;font-weight:600;margin-top:20px;cursor:pointer;font-family:inherit}
+.ios-fp{display:block;text-align:center;color:#8A8A8E;font-size:13px;margin-top:14px;cursor:pointer;font-family:inherit}
+</style><style>
+@font-face{font-family:AppName;src:url(assets/appname.ttf)}
+.spl{position:fixed;inset:0;background:#000;z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;transition:opacity .4s}
+.spl img{width:110px;height:110px;border-radius:50%}.spl b{font-family:AppName,Lato;font-size:26px;margin-top:16px;letter-spacing:2px}.spl small{position:absolute;bottom:26px}
+.mth{display:flex;gap:10px;margin:12px 0}.mth div{flex:1;background:#fff;border:2px solid #E0E0E0;border-radius:8px;padding:10px 4px;text-align:center;cursor:pointer;position:relative;color:#757575;font-size:13px}
+.mth div.on{border-color:#674FA3;color:#000;font-weight:700}.mth img.l{width:42px;height:42px;object-fit:contain;display:block;margin:0 auto 4px}.mth img.ck{position:absolute;top:4px;right:4px;width:18px;display:none}.mth div.on img.ck{display:block}
+.ins{background:#1B1C1E;color:#fff;border-radius:8px;padding:14px;margin:8px 0 12px;line-height:1.75;font-size:14px}.ins .y{color:#FFEB3B;font-weight:700}
+.cp{display:inline-flex;align-items:center;gap:4px;background:#ffffff22;padding:3px 10px;border-radius:14px;margin-left:8px;font-size:12px;cursor:pointer}.cp img{width:14px}
+.av{display:flex;align-items:center;gap:12px;background:#fff;border-radius:8px;box-shadow:0 1px 5px #0002;padding:14px}.av img{width:36px}.av small{color:#757575}.av h2{font-size:22px}
+.dsh{border:1.5px dashed #9E9E9E;border-radius:6px;padding:10px;text-align:center;color:#000;font-size:13px;margin:12px 0}
+.kv{display:flex;padding:9px 0}.kv span{width:44%;color:#212121}.kv b{flex:1;color:#48454E;font-weight:400}
+.dl{border:0;border-top:1.5px dashed #BDBDBD;margin:14px 0}
+.tabs{display:flex;gap:8px;margin-bottom:12px}.tabs div{flex:1;text-align:center;padding:10px 4px;background:#C5CAE8;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer}.tabs div.on{background:#674FA3;color:#fff}
+.tr{background:#fff;border-radius:8px;box-shadow:0 1px 5px #0002;padding:12px;margin-bottom:10px;display:flex;gap:12px;align-items:center}.tr .n{font-weight:700;color:#48454E;width:22px}.tr .x{flex:1;font-size:13px}.tr .am{color:#589B5A;font-weight:700;font-size:16px}
+.tr .m{background:#273238;color:#fff;border-radius:4px;padding:3px 8px;font-size:11px}
+.lbh,.lbr{display:flex;padding:12px 16px;color:#424242}.lbh{font-weight:700}.lbr{border-bottom:1px solid #BDBDBD;background:#FEF7FF}.lbh span:first-child,.lbr span:first-child{width:56px}.lbh span:nth-child(2),.lbr span:nth-child(2){flex:1}
+.rf{background:#1B1C1E;border-radius:8px;color:#fff;padding:18px;text-align:center;margin:14px 0}.rf h3{color:#FFB74D;margin:10px 0}.rf p{line-height:1.7;font-size:14px}
+.pbtn{display:flex;align-items:center;justify-content:center;gap:10px;background:#674FA3;color:#fff;border-radius:8px;padding:14px;font-weight:700;cursor:pointer}.pbtn img{width:22px}
+.dlg{position:fixed;inset:0;background:#0009;z-index:60;display:flex;align-items:center;justify-content:center;padding:24px}.dlg>div{background:#fff;border-radius:14px;padding:22px;text-align:center;width:100%;max-width:340px;color:#000}
+.dlg img{width:70px;margin-bottom:8px}.dlg .ok{margin-top:14px;padding:11px;border-radius:8px;color:#fff;font-weight:700;cursor:pointer}
+.vd{display:flex;align-items:center;gap:12px;background:#fff;border-radius:8px;box-shadow:0 1px 5px #0002;padding:14px;margin-bottom:12px}.vd img{width:34px}.vd .x{flex:1}.vd small{color:#9E9E9E;font-weight:700;font-size:12px}
+.pl{background:#F3F0F7;border-radius:8px;padding:10px 14px;margin:6px 0;font-size:14px}
+.bn{position:fixed;left:0;right:0;bottom:0;max-width:480px;margin:0 auto;background:#F3EDF7;display:flex;padding-bottom:env(safe-area-inset-bottom,0);z-index:8;box-shadow:0 -1px 6px #0002}
+.bn div{flex:1;text-align:center;padding:9px 2px 8px;font-size:12px;color:#757575;cursor:pointer}
+.bn div img{width:24px;height:24px;display:block;margin:0 auto 2px;opacity:.65}
+.bn div.on{color:#674FA3;font-weight:700}.bn div.on img{opacity:1}
+.fab{position:fixed;right:calc(50% - 240px + 16px);bottom:78px;width:52px;height:52px;border-radius:50%;background:#674FA3;color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 2px 8px #0004;cursor:pointer;z-index:9}
+@media(max-width:480px){.fab{right:16px}}
+.pmenu{background:#fff;border-radius:8px;box-shadow:0 1px 5px #0002;margin-bottom:12px;overflow:hidden}
+.pmi{display:flex;align-items:center;gap:14px;height:54px;padding:0 16px;color:#000;cursor:pointer;border-bottom:1px solid #EFEFEF}.pmi:last-child{border:0}.pmi img{width:26px;height:26px}
+.rtabs{display:flex;gap:8px;overflow-x:auto;padding:0 12px 14px;white-space:nowrap}
+.rtabs span{flex:none;display:inline-block;padding:8px 16px;border-radius:20px;background:#C5CAE8;color:#424242;font-size:12px;font-weight:700;cursor:pointer;border:2px solid transparent}
+.rtabs span.on{background:#FEC107;border-color:#FEC107;color:#000}
+.echip{min-width:60px;height:35px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:#C5CAE8;border:2px solid #9E9E9E;color:#000;font-weight:700;font-size:13px;cursor:pointer}
+.echip.on{background:#FEC107;border-color:#FEC107}
+.fixbtn{position:fixed;left:0;right:0;bottom:0;max-width:480px;margin:0 auto;padding:14px 12px calc(14px + env(safe-area-inset-bottom,0));background:#FEF7FF}
+.fixbtn button{padding:14px}
+</style></head><body><div id="app"></div><div id="toast"></div>
+<script>
+const DB="https://zx-sports-656da-default-rtdb.firebaseio.com/";
+const P={users:"Shuvo_Users69x ",ff:"Shuvo_FreeFire69x ",sl:"Shuvo_Sliders69x ",notice:"Shuvo_Notice69x ",admin:"Shuvo_Admin69x "};
+const $=s=>document.querySelector(s);
+const api=async(p,m="GET",b,q="")=>{const r=await fetch(DB+p.split("/").map(encodeURIComponent).join("/")+".json"+q,{method:m,body:b?JSON.stringify(b):undefined});if(!r.ok)throw new Error("Network/Rules error "+r.status);return r.json()};
+const toast=t=>{const e=$("#toast");e.textContent=t;e.style.display="block";setTimeout(()=>e.style.display="none",2600)};
+let me=JSON.parse(localStorage.zx_me||"null"),tab="home",view=null,SLTMR=null;
+const MODES=[["Br Match","br_match","Battle Royale"],["Cs Match","cs_match","Clash Squad"],["Lw Match","lw_match","Lone Wolf"],["Ludo Match","ludo_match","Ludo"],["Verses Match","verses_match","Verses"],["Free Match","free_match","Free Match"]];
+const tk=v=>"৳"+(+v||0);
+function shell(inner){
+ $("#app").innerHTML=`<header><img src="assets/app_logo.jpg"><b>ZX SPORTS</b><span class="bal">${tk(me.Balance)}</span></header><main>${inner}</main>
+ <nav>${[["home","🏠","Home"],["my","🎮","My Matches"],["rank","🏆","Leaderboard"],["wallet","💰","Wallet"],["me","👤","Profile"]].map(t=>`<a class="${tab==t[0]?"on":""}" onclick="go('${t[0]}')"><b>${t[1]}</b>${t[2]}</a>`).join("")}</nav>`}
+function go(t){tab=t;view=null;render()}
+async function refreshMe(){if(!me)return;const u=await api(P.users+"/"+me._k);if(u){me={...u,_k:me._k};localStorage.zx_me=JSON.stringify(me)}}
+function auth(mode="login"){
+ $("#app").innerHTML=`<main><img class="lg" src="assets/app_logo.jpg"><h3 class="c">${mode=="login"?"Login":"Create Account"}</h3>
+ ${mode=="reg"?'<input id="n" placeholder="Full Name">':""}<input id="u" placeholder="Username"><input id="pw" type="password" placeholder="Password">
+ <button onclick="${mode=="login"?"login()":"register()"}" style="margin-top:8px">${mode=="login"?"Login":"Register"}</button>
+ <p class="c mu" style="margin-top:16px;cursor:pointer" onclick="auth('${mode=="login"?"reg":"login"}')">${mode=="login"?"অ্যাকাউন্ট নেই? Register":"আগেই অ্যাকাউন্ট আছে? Login"}</p></main>`}
+async function findUser(u){const all=await api(P.users)||{};const k=Object.keys(all).find(k=>(all[k].Username||"").toLowerCase()==u.toLowerCase());return k?{...all[k],_k:k}:null}
+async function login(){try{const u=$("#u").value.trim(),pw=$("#pw").value,x=await findUser(u);
+ if(!x||String(x.Password)!==pw)return toast("Username বা Password ভুল");
+ if(x.UsersBan)return toast("আপনার অ্যাকাউন্ট ব্যান করা হয়েছে");me=x;localStorage.zx_me=JSON.stringify(me);render()}catch(e){toast(e.message)}}
+async function register(){try{const n=$("#n").value.trim(),u=$("#u").value.trim(),pw=$("#pw").value;
+ if(!n||u.length<3||pw.length<6)return toast("সব তথ্য ঠিকভাবে দিন (Password কমপক্ষে ৬)");
+ if(await findUser(u))return toast("এই Username আগে থেকেই আছে");
+ const d={Name:n,Username:u,Password:pw,Balance:0,Winning:0,"Total Played":0,"Used Code":""};
+ const r=await api(P.users,"POST",d);me={...d,_k:r.name};localStorage.zx_me=JSON.stringify(me);render()}catch(e){toast(e.message)}}
+function logout(){localStorage.removeItem("zx_me");me=null;render()}
+
+async function home(){
+ if(view){return matches(view)}
+ shell(`<div class="sl" id="sl"><div>Loading…</div></div><h3>Play Matches</h3><div class="grid">${MODES.map(m=>`<div class="mode" onclick="view='${m[0]}';render()"><img src="assets/${m[1]}.jpg"><p>${m[2]}</p></div>`).join("")}</div>`);
+ try{const s=await api(P.sl),n=await api(P.notice);const t=[...Object.values(s||{}).map(x=>x.Title||x.Text||x.Notice||""),...Object.values(n||{}).map(x=>typeof x=="string"?x:(x.Notice||x.Title||""))].filter(Boolean);
+ $("#sl").innerHTML=(t.length?t:["Welcome to ZX SPORTS 🎮"]).map(x=>`<div>${x}</div>`).join("")}catch(e){$("#sl").innerHTML="<div>Welcome to ZX SPORTS 🎮</div>"}}
+async function matches(type){
+ shell(`<div class="row" style="margin-bottom:12px"><button class="back" onclick="view=null;render()">←</button><h3 style="margin:0">${type}</h3><span></span></div><div id="ml" class="mu c">Loading…</div>`);
+ try{const all=await api(P.ff)||{};const l=Object.entries(all).filter(([k,v])=>v&&v["Match Type"]==type).sort((a,b)=>(+a[1]["Match Number"]||0)-(+b[1]["Match Number"]||0));
+ $("#ml").outerHTML=l.length?l.map(([k,m])=>card(k,m)).join(""):'<p class="c mu">No Matches Found</p>'}catch(e){$("#ml").textContent=e.message}}
+function card(k,m){const need=+m["Player Need"]||0,j=+m["Player Join"]||0,full=j>=need,joined=m.Players&&Object.values(m.Players).includes(me.Username);
+ return `<div class="card"><div class="row"><b>${m.Title||m["Match Type"]}</b><span class="tag">#${m["Match Number"]||""}</span></div>
+ <p class="mu" style="margin:4px 0">🕒 ${m.Time||""} · ${m["Entry Type"]||""}</p>
+ <div class="row"><span>🏆 Prize <b>${tk(m["Win Prize"])}</b></span><span>🎟 Entry <b>${+m["Entry Fee"]?tk(m["Entry Fee"]):"Free"}</b></span></div>
+ <div class="bar"><i style="width:${need?Math.min(100,j/need*100):0}%"></i></div>
+ <div class="row"><span class="mu">${j}/${need} joined</span><button class="s" ${full||joined?"disabled":""} onclick="join('${k}')">${joined?"Joined":full?"Full":"Join"}</button></div></div>`}
+async function join(k){try{await refreshMe();const m=await api(P.ff+"/"+k);const fee=+m["Entry Fee"]||0;
+ if((+m["Player Join"]||0)>=(+m["Player Need"]||0))return toast("Match Full");
+ if((+me.Balance||0)<fee)return toast("পর্যাপ্ত Balance নেই — Wallet এ যান");
+ if(!confirm("Entry fee "+tk(fee)+". Join করবেন?"))return;
+ await api(P.ff+"/"+k+"/Players","POST",me.Username);
+ await api(P.ff+"/"+k,"PATCH",{"Player Join":(+m["Player Join"]||0)+1});
+ await api(P.users+"/"+me._k,"PATCH",{Balance:(+me.Balance||0)-fee,"Total Played":(+me["Total Played"]||0)+1});
+ await refreshMe();toast("Match এ Join হয়েছে ✅");render()}catch(e){toast(e.message)}}
+async function my(){shell('<h3>My Matches</h3><div id="ml" class="mu c">Loading…</div>');
+ try{const all=await api(P.ff)||{};const l=Object.entries(all).filter(([k,m])=>m&&m.Players&&Object.values(m.Players).includes(me.Username));
+ $("#ml").outerHTML=l.length?l.map(([k,m])=>card(k,m)).join(""):'<p class="c mu">No Matches Found</p>'}catch(e){$("#ml").textContent=e.message}}
+async function rank(){shell('<h3>🏆 Leaderboard</h3><div id="ml" class="mu c">Loading…</div>');
+ try{const u=Object.values(await api(P.users)||{}).sort((a,b)=>(+b.Winning||0)-(+a.Winning||0)).slice(0,50);
+ $("#ml").outerHTML=u.map((x,i)=>`<div class="card row"><span><b>${["🥇","🥈","🥉"][i]||"#"+(i+1)}</b> &nbsp;${x.Name||x.Username}</span><b>${tk(x.Winning)}</b></div>`).join("")}catch(e){$("#ml").textContent=e.message}}
+async function wallet(){await refreshMe().catch(()=>{});shell(`<div class="card c"><p class="mu">Current Balance</p><h1>${tk(me.Balance)}</h1><p class="mu">Total Winning ${tk(me.Winning)}</p></div>
+ <div class="grid"><button onclick="tx('DEPOSIT')">➕ Deposit</button><button class="g" onclick="tx('WITHDRAW')">⬆ Withdraw</button></div><div id="tx"></div>`)}
+function tx(t){$("#tx").innerHTML=`<div class="card" style="margin-top:14px"><h3>${t=="DEPOSIT"?"Deposit":"Withdraw"}</h3>
+ <select id="mt"><option>bKash</option><option>Nagad</option><option>Rocket</option></select><input id="nu" placeholder="${t=="DEPOSIT"?"Sender number":"Your number"}" inputmode="numeric"><input id="am" type="number" placeholder="Amount"><input id="tid" placeholder="Transaction ID (only for deposit)">
+ <button onclick="sendTx('${t}')">Submit Request</button></div>`}
+async function sendTx(t){const a=+$("#am").value,n=$("#nu").value.trim();if(!a||a<=0||!n)return toast("Amount আর number দিন");
+ if(t=="WITHDRAW"&&a>(+me.Balance||0))return toast("Balance কম আছে");
+ try{await api(P.users+"/"+me._k+"/"+t,"POST",{Method:$("#mt").value,Number:n,Amount:a,TrxID:$("#tid").value.trim(),Status:"Pending",Time:new Date().toLocaleString()});toast("Request পাঠানো হয়েছে, Admin approve করবেন");$("#tx").innerHTML=""}catch(e){toast(e.message)}}
+function prof(){shell(`<div class="card c"><div style="font-size:54px">👤</div><h3>${me.Name||me.Username}</h3><p class="mu">@${me.Username}</p></div>
+ <div class="grid"><div class="card c"><p class="mu">Total Played</p><h2>${me["Total Played"]||0}</h2></div><div class="card c"><p class="mu">Total Winning</p><h2>${tk(me.Winning)}</h2></div></div>
+ <div class="card"><b>Refer & Earn</b><p class="mu" style="margin:6px 0">আপনার Refer Code: <b style="color:#fff">${me.Username}</b></p><button class="g" onclick="navigator.clipboard.writeText('${me.Username}');toast('Copied')">Copy Code</button></div>
+ <div class="grid" style="margin-bottom:12px"><button class="g" onclick="history()">🧾 History</button><button class="g" onclick="results()">📊 Results</button></div><a class="btn" style="display:block;text-align:center;text-decoration:none;margin-bottom:12px" href="https://t.me/+Gj2-n--fbwhmYWU1" target="_blank">💬 Support / Developer (Telegram)</a>
+ <button class="g" style="color:var(--er)" onclick="logout()">Logout</button>`)}
+function render(){if(!me)return auth();(({home,my,results,profile:profileHome})[tab]||home)()}
+
+const N={j:"Shuvo_Joiners69x ",st:"Shuvo_Statistics69x ",am:"Shuvo_AddMoney69x ",wd:"Shuvo_Withdraw69x ",wn:"Shuvo_Winners69x ",ru:"Shuvo_Rules69x "};
+const RK={"BR MATCH":"Br Rules","Clash Squad":"Cs Rules","LONE WOLF":"Lw Rules","Ludo":"Ludo Rules","Free Match":"Free Rules","CS 2 VS 2":"Deal Rules"};
+const kid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const mine=async()=>{const j=await api(N.j)||{};return Object.values(j).filter(x=>x.Username==me.Username)};
+const back=f=>`<div class="topb"><img src="assets/ic_keyboard_arrow_left_black.png" onclick="${f}"><b></b></div>`;
+function card(k,m){const need=+m["Player Need"]||0,j=+m["Player Join"]||0;
+ return `<div class="card" onclick="details('${k}')" style="cursor:pointer"><div class="row"><b>${m.Title||m["Match Type"]}</b><span class="tag">#${m["Match Number"]||""}</span></div>
+ <p class="mu" style="margin:4px 0">🕒 ${m.Time||""} · ${m["Entry Type"]||""}</p>
+ <div class="row"><span>🏆 Prize <b>${tk(m["Win Prize"])}</b></span><span>🎟 Entry <b>${+m["Entry Fee"]?tk(m["Entry Fee"]):"Free"}</b></span></div>
+ <div class="bar"><i style="width:${need?Math.min(100,j/need*100):0}%"></i></div><div class="row"><span class="mu">${j}/${need} joined</span><span class="tag">${j>=need?"Full":"Details ›"}</span></div></div>`}
+async function my(){shell('<h3>My Matches</h3><div id="ml" class="mu c">Loading…</div>');
+ try{const ks=(await mine()).map(x=>x["Match Key"]);const all=await api(P.ff)||{};const l=Object.entries(all).filter(([k,m])=>m&&ks.includes(m["Match Key"]||k));
+ $("#ml").outerHTML=l.length?l.map(([k,m])=>card(k,m)).join(""):'<p class="c mu">No Matches Found</p>'}catch(e){$("#ml").textContent=e.message}}
+async function details(k){shell(back("render()")+'<div id="ml" class="mu c">Loading…</div>');
+ try{const m=await api(P.ff+"/"+k),mk=m["Match Key"]||k;const [js,ru]=await Promise.all([api(N.j),api(N.ru)]);
+ const ps=Object.values(js||{}).filter(x=>x["Match Key"]==mk).sort((a,b)=>a.Position-b.Position);const joined=ps.some(x=>x.Username==me.Username);
+ const rules=(ru||{})[RK[m["Match Type"]]]||"";const full=ps.length>=(+m["Player Need"]||0);
+ $("#ml").outerHTML=`<div class="card"><div class="row"><h3 style="margin:0">${m.Title||""}</h3><span class="tag">#${m["Match Number"]||""}</span></div>
+ <p class="mu" style="margin:6px 0">🕒 ${m.Time||""}</p>
+ ${[["Win Prize","🏆 Win Prize"],["Per Kill","🔫 Per Kill"],["Entry Fee","🎟 Entry Fee"],["Play Map","🗺 Map"],["Version","📱 Version"]].filter(x=>m[x[0]]).map(x=>`<div class="row" style="padding:5px 0"><span class="mu">${x[1]}</span><b>${x[0].match(/Prize|Kill|Fee/)?tk(m[x[0]]):m[x[0]]}</b></div>`).join("")}
+ ${joined?`<div class="card" style="background:#110e1b;margin:10px 0 0"><div class="row"><span class="mu">Room ID</span><b>${m["Room ID"]||"Coming soon"}</b></div><div class="row" style="margin-top:6px"><span class="mu">Room Pass</span><b>${m["Room Pass"]||"Coming soon"}</b></div></div>`:""}
+ <button style="margin-top:14px" ${joined||full?"disabled":""} onclick="joinPage('${k}')">${joined?"Already Joined ✅":full?"Match Full":"Join Match"}</button></div>
+ ${rules?`<div class="card"><b>Rules</b><p class="mu" style="white-space:pre-wrap;margin-top:8px">${String(rules).replace(/</g,"&lt;")}</p></div>`:""}
+ <div class="card"><b>Participants (${ps.length})</b>${ps.length?ps.map((x,i)=>`<div class="row" style="padding:6px 0"><span>${i+1}. ${x.Name||x.Username}</span></div>`).join(""):'<p class="mu">No Participants Registered</p>'}</div>`}catch(e){$("#ml").textContent=e.message}}
+function joinPage(k){shell(back(`details('${k}')`)+`<div class="card" style="margin-top:10px"><h3>Join Match</h3><input id="pn" placeholder="Free Fire In-game Name"><button onclick="join('${k}')">Confirm & Pay</button></div>`)}
+async function join(k){try{const name=$("#pn").value.trim();if(!name)return toast("In-game Name দিন");await refreshMe();const m=await api(P.ff+"/"+k),mk=m["Match Key"]||k;
+ const fee=+m["Entry Fee"]||0,bal=+me.Balance||0,win=+me.Winning||0;
+ const js=Object.values(await api(N.j)||{}).filter(x=>x["Match Key"]==mk);
+ if(js.some(x=>x.Username==me.Username))return toast("আগেই Join করেছেন");
+ if(js.length>=(+m["Player Need"]||0))return toast("Match Full");
+ if(bal+win<fee)return toast("পর্যাপ্ত Balance নেই — Wallet এ যান");
+ const fromB=Math.min(bal,fee),fromW=fee-fromB,jk=kid(),hk=kid(),pos=js.length+1;
+ await api(N.j+"/"+jk,"PUT",{Name:name,Username:me.Username,Key:jk,"History Key":hk,"Match Key":mk,Position:String(pos),FcmID:"web"});
+ await api(N.st+"/"+hk,"PUT",{Title:m.Title||"",Username:me.Username,"Entry Fee":String(fee),Win:"0","Match Number":m["Match Number"]||"","Statistics Key":hk,Time:new Date().toLocaleString("en-CA",{hour12:true}),Position:String((+me["Total Played"]||0)+1)});
+ await api(P.ff+"/"+k,"PATCH",{"Player Join":String(pos)});
+ await api(P.users+"/"+me._k,"PATCH",{Balance:String(bal-fromB),Winning:String(win-fromW),"Total Played":String((+me["Total Played"]||0)+1),STATISTICS:"YES"});
+ await refreshMe();toast("Match এ Join হয়েছে ✅");details(k)}catch(e){toast(e.message)}}
+async function sendTx(t){const a=+$("#am").value,n=$("#nu").value.trim(),trx=$("#tid").value.trim();if(!a||a<=0||!n)return toast("Amount আর number দিন");
+ await refreshMe();if(t=="WITHDRAW"&&a>(+me.Winning||0))return toast("Withdraw শুধু Winning Balance থেকে ("+tk(me.Winning)+")");
+ if(t=="DEPOSIT"&&!trx)return toast("Transaction ID দিন");
+ try{const rec={Username:me.Username,Number:n,Method:$("#mt").value,Amount:String(a),Status:"Pending",FcmID:"web",TrxID:trx,Position:String(Date.now()),Time:new Date().toLocaleString("en-GB",{hour12:true}).replace(",","")};
+ if(t=="DEPOSIT")await api(N.am+"/"+kid(),"PUT",rec);
+ else{rec.Payment=n;delete rec.Number;rec.Number=n;rec.TrxID=trx||kid();await api(N.wd+"/"+kid(),"PUT",rec);await api(P.users+"/"+me._k,"PATCH",{Winning:String((+me.Winning||0)-a),WITHDRAW:"YES"})}
+ await refreshMe();toast("Request পাঠানো হয়েছে, Admin approve করবেন");wallet()}catch(e){toast(e.message)}}
+async function history(){shell(back("go('me')")+'<h3 style="margin-top:8px">History</h3><div id="ml" class="mu c">Loading…</div>');
+ try{const [s,a,w]=await Promise.all([api(N.st),api(N.am),api(N.wd)]);const f=o=>Object.values(o||{}).filter(x=>x.Username==me.Username);
+ const L=[...f(s).map(x=>({t:"MatchEntry",a:x["Entry Fee"],s:"success",d:x.Time,n:x.Title,c:"-"})),...f(a).map(x=>({t:"Deposit · "+x.Method,a:x.Amount,s:x.Status,d:x.Time,n:x.TrxID,c:"+"})),...f(w).map(x=>({t:"Withdraw · "+x.Method,a:x.Amount,s:x.Status,d:x.Time,n:x.Payment||x.Number,c:"-"}))];
+ const col={success:"var(--ok)",pending:"#f5b942",rejected:"var(--er)"};
+ $("#ml").outerHTML=L.length?L.map(x=>{const st=String(x.s).toLowerCase();return `<div class="card"><div class="row"><b>${x.t}</b><b style="color:${x.c=="+"?"var(--ok)":"var(--er)"}">${x.c}${tk(x.a)}</b></div><div class="row mu" style="margin-top:6px"><span>${x.n||""}</span><span style="color:${col[st]||"var(--mu)"}">${st}</span></div><p class="mu" style="font-size:12px;margin-top:4px">${x.d||""}</p></div>`}).join(""):'<p class="c mu">No History</p>'}catch(e){$("#ml").textContent=e.message}}
+async function results(){shell(back("go('me')")+'<h3 style="margin-top:8px">Results</h3><div id="ml" class="mu c">Loading…</div>');
+ try{const [ff,wn]=await Promise.all([api(P.ff),api(N.wn)]);const W=Object.values(wn||{});const g={};W.forEach(x=>(g[x["Match Key"]]=g[x["Match Key"]]||[]).push(x));
+ const l=Object.entries(ff||{}).filter(([k,m])=>g[m["Match Key"]||k]);
+ $("#ml").outerHTML=l.length?l.map(([k,m])=>`<div class="card"><div class="row"><b>${m.Title||""}</b><span class="tag">#${m["Match Number"]||""}</span></div><p class="mu" style="margin:4px 0 8px">${m.Time||""} · ${m["Match Type"]||""}</p>${g[m["Match Key"]||k].map(x=>`<div class="row" style="padding:4px 0"><span>${x.Name||x.Username}</span><span class="mu">🔫 ${x.Kill||0} · <b style="color:var(--ok)">${tk(x.Win)}</b></span></div>`).join("")}</div>`).join(""):'<p class="c mu">No Results Yet</p>'}catch(e){$("#ml").textContent=e.message}}
+
+N.pay="Shuvo_Payment69x ";N.used="Shuvo_Used69x ";N.ban="Shuvo_Ban69x ";
+const DEV=localStorage.zx_dev||(localStorage.zx_dev=kid()+kid());
+let CFG=null,NUMS={};
+async function cfg(){if(CFG)return CFG;const a=await api(P.admin)||{};CFG=(a["Bkash Number"]!==undefined||a["Minimum Deposit"]!==undefined)?a:(Object.values(a)[0]||{});return CFG}
+const banned=async()=>JSON.stringify(await api(N.ban)||{}).includes(DEV);
+async function findUser(u){const k=u.replace(/[.#$\[\]\/\s]/g,"");const x=await api(P.users+"/"+k);return x?{...x,_k:k}:null}
+function auth(mode="login"){
+ $("#app").innerHTML=`<main><img class="lg" src="assets/app_logo.jpg"><h3 class="c">${mode=="login"?"Login":"Create Account"}</h3>
+ ${mode=="reg"?'<input id="em" type="email" placeholder="Email"><input id="no" placeholder="Mobile Number" inputmode="numeric">':""}<input id="u" placeholder="Username">
+ <input id="pw" type="password" placeholder="Password">${mode=="reg"?'<input id="rc" placeholder="Refer Code (optional)">':""}
+ <button onclick="${mode=="login"?"login()":"register()"}" style="margin-top:8px">${mode=="login"?"Login":"Register"}</button>
+ <p class="c mu" style="margin-top:16px;cursor:pointer" onclick="auth('${mode=="login"?"reg":"login"}')">${mode=="login"?"অ্যাকাউন্ট নেই? Register":"আগেই অ্যাকাউন্ট আছে? Login"}</p></main>`}
+function banScreen(){$("#app").innerHTML=`<main class="c"><div style="font-size:70px;margin-top:80px">🚫</div><h3>Account Banned</h3><p class="mu">আপনার অ্যাকাউন্ট/ডিভাইস ব্যান করা হয়েছে। সমস্যা মনে হলে সাপোর্টে যোগাযোগ করুন।</p><a class="btn" style="display:block;text-decoration:none;margin-top:20px" href="https://t.me/+Gj2-n--fbwhmYWU1">Telegram Support</a></main>`}
+async function login(){try{if(await banned())return banScreen();const u=$("#u").value.trim(),pw=$("#pw").value,x=await findUser(u);
+ if(!x||String(x.Password)!==pw)return toast("Username বা Password ভুল");
+ if(x.UsersBan=="YES")return banScreen();me=x;localStorage.zx_me=JSON.stringify(me);render()}catch(e){toast(e.message)}}
+async function register(){try{if(await banned())return banScreen();const em=$("#em").value.trim(),no=$("#no").value.trim(),u=$("#u").value.trim(),pw=$("#pw").value,rc=$("#rc").value.trim();
+ if(!/^\S+@\S+\.\S+$/.test(em))return toast("সঠিক Email দিন");if(!/^01\d{9}$/.test(no))return toast("সঠিক মোবাইল নম্বর দিন");
+ if(!/^[A-Za-z0-9_]{3,}$/.test(u))return toast("Username কমপক্ষে ৩ অক্ষর (শুধু a-z, 0-9, _)");if(pw.length<6)return toast("Password কমপক্ষে ৬ অক্ষর");
+ if(await findUser(u))return toast("এই Username আগে থেকেই আছে");
+ let ref=null;if(rc){ref=await findUser(rc);if(!ref)return toast("Refer Code সঠিক নয়")}
+ const d={Username:u,Number:no,Email:em,Password:pw,"Refer Code":u,UsersBan:"NO","Device ID":DEV,FcmID:"web",Balance:"0","Total Winning":"0",Winning:"0","Total Refer":"0","Total Played":"0","Total Deposit":"0","Total Withdraw":"0",DEPOSIT:"NO",WITHDRAW:"NO",STATISTICS:"NO","Reffer Account":ref?"YES":"NO","Used Code":ref?rc:"",Registered:new Date().toLocaleDateString("en-GB").replace(/\//g,"-")};
+ await api(P.users+"/"+u,"PUT",d);
+ if(ref)await api(P.users+"/"+ref._k,"PATCH",{"Total Refer":String((+ref["Total Refer"]||0)+1)});
+ me={...d,_k:u};localStorage.zx_me=JSON.stringify(me);render()}catch(e){toast(e.message)}}
+const HOW={Bkash:"⚪ *247# ডায়াল করে আপনার BKASH মোবাইল মেনুতে যান অথবা BKASH অ্যাপ এ যান ।",Nagad:"⚪ *167# ডায়াল করে আপনার NAGAD মোবাইল মেনুতে যান অথবা NAGAD অ্যাপ এ যান ।",Rocket:"⚪ *322# ডায়াল করে আপনার Rocket মোবাইল মেনুতে যান অথবা Rocket অ্যাপ এ যান ।"};
+async function wallet(){await refreshMe().catch(()=>{});shell(`<div class="card c"><p class="mu">Deposit Balance</p><h1>${tk(me.Balance)}</h1><p class="mu">Winning Balance ${tk(me.Winning)}</p></div>
+ <div class="grid"><button onclick="tx('DEPOSIT')">➕ Deposit</button><button class="g" onclick="tx('WITHDRAW')">⬆ Withdraw</button></div><div id="tx"></div>`)}
+async function tx(t){const c=await cfg().catch(()=>({}));const num={Bkash:c["Bkash Number"],Nagad:c["Nagad Number"],Rocket:c["Rocket Number"]};NUMS=num;
+ $("#tx").innerHTML=`<div class="card" style="margin-top:14px"><h3>${t=="DEPOSIT"?"Deposit":"Withdraw"}</h3>
+ <select id="mt" onchange="mtc()"><option>Bkash</option><option>Nagad</option><option>Rocket</option></select>
+ ${t=="DEPOSIT"?`<div id="hw" class="card" style="background:#110e1b"></div><input id="tid" placeholder="Transaction ID"><p class="mu">Minimum Deposit ${tk(c["Minimum Deposit"])}</p>`
+ :`<input id="nu" placeholder="আপনার নম্বর" inputmode="numeric"><input id="am" type="number" placeholder="Amount"><p class="mu">Minimum Withdrawal amount is ${tk(c["Minimum Withdraw"])} (Winning থেকে)</p>`}
+ <button onclick="${t=="DEPOSIT"?"deposit()":"withdraw()"}">${t=="DEPOSIT"?"VERIFY":"Submit Request"}</button></div>`;if(t=="DEPOSIT")mtc()}
+function mtc(){const e=$("#hw");if(!e)return;const m=$("#mt").value;e.innerHTML=`<p>📱 ${m} Send Money করুন এই নম্বরে:</p><h3 style="margin:6px 0"><span id="pn">${NUMS[m]||"—"}</span> <span style="cursor:pointer" onclick="navigator.clipboard.writeText('${NUMS[m]||""}');toast('Copied')">📋</span></h3><p class="mu" style="line-height:1.6">${HOW[m]}<br>⚪ এখন নিচের বক্সে আপনার Transaction ID দিন আর VERIFY বাটন এ ক্লিক করুন ।</p>`}
+async function deposit(){const m=$("#mt").value,trx=$("#tid").value.trim();if(!trx)return toast("Transaction ID দিন");
+ try{await refreshMe();const used=await api(N.used+"/"+m+trx);if(used)return toast("এই Transaction ID আগেই ব্যবহার করা হয়েছে!");
+ const p=await api(N.pay+"/"+trx),T={Bkash:"B",Nagad:"N",Rocket:"R"}[m];
+ if(!p||p.type!=T)return toast("Transaction ID পাওয়া যায়নি!");const amt=+p.amount,c=await cfg();
+ if(amt<(+c["Minimum Deposit"]||0))return toast("Minimum Deposit "+tk(c["Minimum Deposit"]));
+ await api(N.used+"/"+m+trx,"PUT",{txid:m+trx});await api(N.pay+"/"+trx,"DELETE");
+ await api(N.am+"/"+trx,"PUT",{Username:me.Username,Number:me.Number||"",Method:m,Amount:String(amt),Status:"Success",TrxID:trx,Time:new Date().toLocaleString("en-GB",{hour12:true}).replace(",",""),Position:String((+me["Total Deposit"]||0)+1)});
+ await api(P.users+"/"+me._k,"PATCH",{Balance:String((+me.Balance||0)+amt),"Total Deposit":String((+me["Total Deposit"]||0)+1),DEPOSIT:"YES"});
+ await refreshMe();toast("Deposit সফল: "+tk(amt)+" ✅");wallet()}catch(e){toast(e.message)}}
+async function withdraw(){const a=+$("#am").value,n=$("#nu").value.trim(),m=$("#mt").value;await refreshMe();const c=await cfg();
+ if(!/^01\d{9}$/.test(n))return toast("সঠিক নম্বর দিন");if(!a||a<(+c["Minimum Withdraw"]||0))return toast("Minimum Withdraw Amount Is "+(c["Minimum Withdraw"]||0)+"TK");
+ if(a>(+me.Winning||0))return toast("Winning Balance কম আছে ("+tk(me.Winning)+")");
+ try{const k=kid();await api(N.wd+"/"+k,"PUT",{Username:me.Username,Number:me.Number||"",Method:m,Payment:n,Amount:String(a),Status:"Pending",FcmID:"web",TrxID:k,Position:String((+me["Total Withdraw"]||0)+1),Time:new Date().toLocaleString("en-GB",{hour12:true}).replace(",","")});
+ await api(P.users+"/"+me._k,"PATCH",{Winning:String((+me.Winning||0)-a),"Total Withdraw":String((+me["Total Withdraw"]||0)+1),WITHDRAW:"YES"});
+ await refreshMe();toast("Withdraw Request পাঠানো হয়েছে");wallet()}catch(e){toast(e.message)}}
+async function refer(){await refreshMe().catch(()=>{});const c=await cfg().catch(()=>({}));const link=c["APP LINK"]||location.href;
+ const msg="Interested to play Tournaments? Want to make some cash out of it?? Try out ZX SPORTS, an eSports Platform. Join Now: "+link+" Use my refer code: "+me.Username;
+ shell(back("go('me')")+`<div class="card c" style="margin-top:10px"><div style="font-size:54px">🎁</div><h3>Refer & Earn</h3><p class="mu">বন্ধুকে Refer করুন, সে প্রথম Deposit (কমপক্ষে ৳100) করলে বোনাস পাবেন।</p>
+ <div class="card" style="background:#110e1b;margin-top:12px"><p class="mu">Your Refer Code</p><h2>${me["Refer Code"]||me.Username}</h2></div><p class="mu">Total Refer: <b style="color:#fff">${me["Total Refer"]||0}</b></p>
+ <button style="margin-top:12px" onclick="(navigator.share?navigator.share({text:'${msg.replace(/'/g,"")}'}):navigator.clipboard.writeText('${msg.replace(/'/g,"")}').then(()=>toast('Copied')))">Share</button></div>`)}
+function prof(){shell(`<div class="card c"><div style="font-size:54px">👤</div><h3>${me.Name||me.Username}</h3><p class="mu">@${me.Username}${me.Number?" · "+me.Number:""}</p><p class="mu">${me.Email||""}</p></div>
+ <div class="grid"><div class="card c"><p class="mu">Total Played</p><h2>${me["Total Played"]||0}</h2></div><div class="card c"><p class="mu">Total Winning</p><h2>${tk(me["Total Winning"]||me.Winning)}</h2></div></div>
+ <div class="grid" style="margin-bottom:12px"><button class="g" onclick="history()">🧾 History</button><button class="g" onclick="results()">📊 Results</button><button class="g" onclick="refer()">🎁 Refer & Earn</button><button class="g" onclick="dev()">🛠 Developer</button></div>
+ <button class="g" style="color:var(--er)" onclick="logout()">Logout</button>`)}
+async function dev(){const c=await cfg().catch(()=>({}));shell(back("go('me')")+`<div class="card c" style="margin-top:10px"><img class="lg" style="margin-top:10px" src="assets/app_logo.jpg"><h3>ZX SPORTS</h3><p class="mu" style="margin:8px 0 14px">যেকোন প্রয়োজনে টেলিগ্রামে যোগাযোগ করুন এবং এডমিনকে ইনবক্স করে অপেক্ষা করুন সমাধান পাবেন ইনশাআল্লাহ ।</p><a class="btn" style="display:block;text-decoration:none" href="${c["Support Group"]||"https://t.me/+Gj2-n--fbwhmYWU1"}" target="_blank">💬 Telegram Support</a></div>`)}
+
+const TYPES=[["BR MATCH","br_match","BR MATCH","FreeFire FullMap Matches"],["Clash Squad","cs_match","Clash Squad","Clash Squad Matches"],["LONE WOLF","lw_match","LONE WOLF","Lone Wolf"],["CS 2 VS 2","verses_match","CS 2 VS 2","CS 1v1 2v2"],["Ludo","ludo_match","Ludo","Grand Match"],["Free Match","free_match","Free Match","Free Matches"]];
+const TIMG={"BR MATCH":"br_match","Clash Squad":"cs_match","LONE WOLF":"lw_match","CS 2 VS 2":"verses_match","Ludo":"ludo_match","Free Match":"free_match"};
+const NAVITEMS=[["home","play","Play"],["my","my_matches","My Matches"],["results","results","Results"],["profile","profile","Profile"]];
+function shell(inner,full,noNav){
+ $("#app").innerHTML=`<header><b>ZX SPORTS</b></header><main class="${full?"z":""}" style="${noNav?"":"padding-bottom:74px"}">${inner}</main>
+ ${noNav?"":`<nav class="bn">${NAVITEMS.map(x=>`<div class="${tab==x[0]?"on":""}" onclick="go('${x[0]}')"><img src="assets/${x[1]}.png">${x[2]}</div>`).join("")}</nav>
+ <div class="fab" onclick="window.open('https://t.me/+Gj2-n--fbwhmYWU1')">💬</div>`}`}
+function bar(t,b,r){return `<div class="topb"><img src="assets/ic_keyboard_arrow_left_black.png" onclick="${b}">${"<b>"+t+"</b>"}${r?`<img src="assets/refresh.png" onclick="${r}">`:""}</div>`}
+function auth(mode="login"){
+ const L=mode=="login";
+ $("#app").innerHTML=`<div class="ios-wrap">
+ <img class="ios-logo" src="assets/app_logo.jpg"><h1 class="ios-title">${L?"Welcome Back":"Create Account"}</h1><p class="ios-sub">${L?"Sign in to continue to ZX SPORTS":"Join ZX SPORTS in a few seconds"}</p>
+ <div class="ios-seg"><i style="left:${L?"3px":"calc(50% + 0px)"}"></i><b class="${L?"on":""}" onclick="auth('login')">Sign In</b><b class="${L?"":"on"}" onclick="auth('reg')">Register</b></div>
+ <div class="ios-card">
+ ${L?"":'<div class="r"><input id="em" type="email" placeholder="Email Address"></div><div class="r"><input id="no" placeholder="Mobile Number" inputmode="numeric"></div>'}
+ <div class="r"><input id="u" placeholder="Username"></div><div class="r"><input id="pw" type="password" placeholder="Password"></div>
+ ${L?"":'<div class="r"><input id="rc" placeholder="Refer Code (Optional)"></div><div class="ios-chk"><input id="ag" type="checkbox"><span>I agree to the Terms and Conditions</span></div>'}
+ </div>
+ <button class="ios-btn" onclick="${L?"login()":"register()"}">${L?"Sign In":"Create Account"}</button>
+ ${L?'<span class="ios-fp" onclick="forgot()">Forgot your password?</span>':""}
+ </div>`}
+function forgot(){toast("পাসওয়ার্ড রিসেট করতে Telegram এ এডমিনের সাথে যোগাযোগ করুন");window.open("https://t.me/+Gj2-n--fbwhmYWU1")}
+const _reg=register;register=async function(){if($("#ag")&&!$("#ag").checked)return toast("Terms and Conditions এ সম্মতি দিন");return _reg()};
+const timeOf=(input,disp)=>{if(input){const im=String(input).match(/(\d+)-(\d+)-(\d+)\s+(\d+):(\d+):(\d+)/);if(im)return new Date(+im[1],+im[2]-1,+im[3],+im[4],+im[5],+im[6]).getTime()}
+ const m=String(disp||"").match(/(\d+)\/(\d+)\/(\d+)\D+(\d+):(\d+)\s*(AM|PM)?/i);if(!m)return null;let H=+m[4]%12;if(/pm/i.test(m[6]||""))H+=12;if(!m[6])H=+m[4];return new Date(+m[3],+m[2]-1,+m[1],H,+m[5]).getTime()};
+const pad2=n=>String(Math.max(0,n)).padStart(2,"0");
+setInterval(()=>document.querySelectorAll("[data-t]").forEach(e=>e.innerHTML=fmtCountdown(+e.dataset.t)),1000);
+async function home(){
+ if(view)return matches(view);
+ shell(`<div class="slw"><div class="sl2" id="sl"><div class="sl-load">Loading...</div></div><div class="dots" id="dt"></div></div><div class="notice" id="nt">Loading Notice...</div>
+ <div class="sec" style="padding:0 12px">FREE FIRE</div><div class="g2">${TYPES.slice(0,4).map(cardT).join("")}</div>
+ <div class="sec" style="padding:0 12px">LUDO AND FREE MATCH</div><div class="g2" style="margin-bottom:16px">${TYPES.slice(4).map(cardT).join("")}</div>`,1);
+ try{const [s,n,a,ff]=await Promise.all([api(P.sl),api(P.notice),cfg().catch(()=>({})),api(P.ff)]);
+ const sl=Object.values(s||{}).filter(x=>x&&x.Url);
+ if(sl.length){$("#sl").innerHTML=sl.map(x=>{const u=x.Url,lk=x.Link&&String(x.Link).includes("https://")?x.Link:"";
+  return lk?`<a href="${lk}" target="_blank"><img src="${u}" onerror="this.style.display='none'"></a>`:`<img src="${u}" onerror="this.style.display='none'">`}).join("");
+ $("#dt").innerHTML=sl.map((_,i)=>`<i class="${i?"":"on"}"></i>`).join("");
+ const syncDots=i=>[...$("#dt").children].forEach((d,j)=>d.classList.toggle("on",i==j));
+ $("#sl").onscroll=e=>syncDots(Math.round(e.target.scrollLeft/e.target.clientWidth));
+ if(SLTMR)clearInterval(SLTMR);
+ if(sl.length>1){let sp=0;SLTMR=setInterval(()=>{const el=document.getElementById("sl");if(!el){clearInterval(SLTMR);SLTMR=null;return}sp=(sp+1)%sl.length;if(el.scrollTo)el.scrollTo({left:sp*el.clientWidth,behavior:"smooth"});syncDots(sp)},3000)}}
+ const nv=Object.values(n||{}).map(x=>typeof x=="string"?x:x.Notice).filter(Boolean)[0]||a.Notice||"";$("#nt").textContent=nv||"Welcome to ZX SPORTS";
+ const c={};Object.values(ff||{}).forEach(m=>{if(m&&m.Position=="Match"&&m["Match Type"])c[m["Match Type"]]=(c[m["Match Type"]]||0)+1});
+ TYPES.forEach(t=>{const e=document.getElementById("c_"+t[0].replace(/ /g,"_"));if(e)e.textContent=c[t[0]]?c[t[0]]+" Matches Found":"No Matches Found"})}catch(e){$("#nt").textContent="Welcome to ZX SPORTS"}}
+function cardT(t){return `<div class="mc" onclick="view='${t[0]}';render()"><img src="assets/${t[1]}.jpg"><div class="l"><b>${t[2]}</b><span id="c_${t[0].replace(/ /g,"_")}">No Matches Found</span></div></div>`}
+async function matches(type){const T=TYPES.find(t=>t[0]==type)||[0,0,type,type];
+ shell(bar(T[3],"view=null;render()",`matches('${type}')`)+`<div style="padding:12px" id="ml"><p class="c mu">Please Wait...</p></div>`,1);
+ try{const all=await api(P.ff)||{};const l=Object.entries(all).filter(([k,v])=>v&&v.Position=="Match"&&v["Match Type"]==type).sort((a,b)=>(+a[1]["Match Number"]||0)-(+b[1]["Match Number"]||0));
+ $("#ml").innerHTML=l.length?l.map(([k,m])=>card(k,m)).join(""):'<p class="c mu" style="margin-top:30px">No Matches Found</p>'}catch(e){$("#ml").textContent=e.message}}
+function xp(id){const e=document.getElementById(id);e.style.display=e.style.display=="block"?"none":"block"}
+const CARD_CACHE={};
+function showRoom(k){const m=CARD_CACHE[k];if(!m)return;const ok=m[me.Username]=="TRUE"&&m.hasOwnProperty("Room ID")&&m.hasOwnProperty("Room Pass")&&!(m["Room ID"]=="FALSE"&&m["Room Pass"]=="FALSE");
+ if(!ok)return toast("Room Details Not Available");
+ dlg(`<h3 style="margin-bottom:10px">${m.Title||""}</h3><p style="line-height:1.8">Room ID - <b>${m["Room ID"]}</b><br>Room Password - <b>${m["Room Pass"]}</b></p>`,"Okay","#398E00")}
+function showPrize(k){const m=CARD_CACHE[k];if(!m)return;const pool=m["Prize Pool"];
+ dlg(`<h3 style="margin-bottom:10px">${m.Title||""}</h3><p style="line-height:1.8;text-align:left">${pool?String(pool).replace(/</g,"&lt;").replace(/\n/g,"<br>"):`Win Prize: <b>${tk(m["Win Prize"])}</b><br>Per Kill: <b>${m["Per Kill"]||0} TK</b>`}</p>`)}
+function fmtCountdown(t){if(!t)return"Match Started";const d=t-Date.now();if(d<=0)return"Match Started";
+ return"STARTS IN - "+pad2(Math.floor(d/864e5))+"d "+pad2(Math.floor(d%864e5/36e5))+"h "+pad2(Math.floor(d%36e5/6e4))+"m "+pad2(Math.floor(d%6e4/1e3))+"s"}
+function card(k,m){CARD_CACHE[k]=m;const need=+m["Player Need"]||0,j=+m["Player Join"]||0,left=need-j,joined=m[me.Username]=="TRUE",full=j>=need,t=timeOf(m.Input,m.Time);
+ return `<div class="mt"><div class="a"><div class="h" onclick="details('${k}')"><img src="assets/${TIMG[m["Match Type"]]||"free_match"}.jpg"><div><span class="bd">#${m["Match Number"]||""}</span><div class="tt">${m.Title||""}</div><div class="tm">Time : ${m.Time||""}</div></div></div>
+ <div class="gr"><div><small>WIN PRIZE</small><b>${m["Win Prize"]||0} TK</b><small style="margin-top:8px">PER KILL</small><b>${m["Per Kill"]||0} TK</b></div><div><small>ENTRY TYPE</small><b>${m["Entry Type"]||"-"}</b><small style="margin-top:8px">MAP</small><b>${m["Play Map"]||"-"}</b></div><div><small>ENTRY FEE</small><b>${m["Entry Fee"]||0} TK</b><small style="margin-top:8px">VERSION</small><b>${m.Version||"-"}</b></div></div>
+ <div class="pr"><div style="flex:1"><div class="bar"><i style="width:${need?j/need*100:0}%"></i></div><div class="row mu" style="font-size:12px;color:#273238"><span>${full?"Match Full":"Only "+left+" Spots Are Left"}</span><span>${j}/${need}</span></div></div><button class="jb" ${joined||full?"disabled":""} onclick="joinPage('${k}')">${joined?"Joined":full?"Match Full":"Join"}</button></div></div>
+ <div class="ex" onclick="showRoom('${k}')" style="cursor:pointer"><img src="assets/vpn_key.png"><span>Room Details</span><img src="assets/expand_more.png"></div>
+ <div class="ex" onclick="showPrize('${k}')" style="cursor:pointer"><img src="assets/ic_trophy.png"><span>Total Prize Details</span><img src="assets/expand_more.png"></div>
+ <div class="tmr" ${t?`data-t="${t}"`:""}>${fmtCountdown(t)}</div></div>`}
+async function my(){shell('<p class="sec" style="padding:0 12px">MY MATCHES</p><div style="padding:0 12px" id="ml"><p class="c mu">Please Wait...</p></div>',1);
+ try{const all=await api(P.ff)||{};const l=Object.entries(all).filter(([k,m])=>m&&m[me.Username]=="TRUE");
+ $("#ml").innerHTML=l.length?l.map(([k,m])=>card(k,m)).join(""):'<p class="c mu" style="margin-top:30px">No Matches Found</p>'}catch(e){$("#ml").textContent=e.message}}
+async function rank(){shell(bar("Top Players","go('home')","rank()")+'<div style="padding:12px" id="ml"><p class="c mu">Please Wait...</p></div>',1);
+ try{const u=Object.values(await api(P.users)||{}).sort((a,b)=>(+b.Winning||0)-(+a.Winning||0)).slice(0,50);
+ $("#ml").innerHTML=u.map((x,i)=>`<div class="card row" style="padding:12px;margin-bottom:10px"><span><b style="display:inline-block;width:34px">${["🥇","🥈","🥉"][i]||"#"+(i+1)}</b>${x.Username}</span><b>${tk(x["Total Winning"]||x.Winning)}</b></div>`).join("")}catch(e){$("#ml").textContent=e.message}}
+async function wallet(){await refreshMe().catch(()=>{});const b=+me.Balance||0,w=+me.Winning||0;
+ shell(bar("Wallet","go('home')")+`<div style="padding:12px"><div class="wb"><div class="x"><small>TOTAL CASH BALANCE</small><h2>BDT ${b+w}</h2></div><div class="mu c" style="font-size:12px;cursor:pointer" onclick="history()">View Transaction<br>History ›</div></div>
+ <div class="wb"><img class="i" src="assets/ic_box_2.png"><div class="x"><small>WINNING CASH BALANCE</small><h2>BDT ${w}</h2></div><button class="pb" onclick="payPage('WITHDRAW')">WITHDRAW</button></div>
+ <div class="wb"><img class="i" src="assets/ic_box_3.png"><div class="x"><small>DEPOSIT CASH BALANCE</small><h2>BDT ${b}</h2></div><button class="pb" onclick="payPage('DEPOSIT')">＋ ADD MORE</button></div>
+ <div class="wb"><img class="i" src="assets/ic_box_1.png"><div class="x"><small>REFER AND EARN</small></div><button class="pb" onclick="refer()">REFER &amp; EARN</button></div></div>`,1)}
+function payPage(t){shell(bar(t=="DEPOSIT"?"Add Money":"Withdraw","wallet()")+'<div style="padding:12px" id="tx"></div>',1,1);tx(t)}
+async function history(){shell(bar("Transaction History","go('wallet')","history()")+'<div style="padding:12px" id="ml"><p class="c mu">Please Wait...</p></div>',1);
+ try{const [s,a,w]=await Promise.all([api(N.st),api(N.am),api(N.wd)]);const f=o=>Object.values(o||{}).filter(x=>x.Username==me.Username);
+ const L=[...f(s).map(x=>({t:"MatchEntry",a:x["Entry Fee"],s:"success",d:x.Time,n:x.Title,c:"-"})),...f(a).map(x=>({t:"Deposit · "+x.Method,a:x.Amount,s:x.Status,d:x.Time,n:x.TrxID,c:"+"})),...f(w).map(x=>({t:"Withdraw · "+x.Method,a:x.Amount,s:x.Status,d:x.Time,n:x.Payment||x.Number,c:"-"}))];
+ const col={success:"#398E00",pending:"#F67C01",rejected:"#E53935"};
+ $("#ml").innerHTML=L.length?L.map(x=>{const st=String(x.s).toLowerCase();return `<div class="card" style="padding:12px;margin-bottom:10px"><div class="row"><b>${x.t}</b><b style="color:${x.c=="+"?"#398E00":"#E53935"}">${x.c=="+"?"+ credited ":"- debited "}${tk(x.a)}</b></div><div class="row mu" style="margin-top:6px"><span>${x.n||""}</span><span style="color:${col[st]||"#757575"};font-weight:700">${st}</span></div><p class="mu" style="font-size:12px;margin-top:4px">${x.d||""}</p></div>`}).join(""):'<p class="c mu" style="margin-top:30px">No History</p>'}catch(e){$("#ml").textContent=e.message}}
+let RESD=null,RT=TYPES[0][0];
+async function results(t){if(t)RT=t;
+ shell(`<p class="sec" style="padding:0 12px">RESULTS</p><div class="rtabs">${TYPES.map(x=>`<span class="${RT==x[0]?"on":""}" onclick="results('${x[0]}')">${x[2]}</span>`).join("")}</div><div style="padding:0 12px" id="ml">${RESD?"":'<p class="c mu">Please Wait...</p>'}</div>`,1);
+ try{if(!RESD){const [ff,wn]=await Promise.all([api(P.ff),api(N.wn)]);const g={};Object.values(wn||{}).forEach(x=>(g[x["Match Key"]]=g[x["Match Key"]]||[]).push(x));RESD={ff:ff||{},g}}
+ const l=Object.entries(RESD.ff).filter(([k,m])=>m&&RESD.g[m["Match Key"]||k]&&m["Match Type"]==RT);
+ $("#ml").innerHTML=l.length?l.map(([k,m])=>`<div class="mt"><div class="a"><div class="h"><img src="assets/${TIMG[m["Match Type"]]||"free_match"}.jpg"><div><span class="bd">#${m["Match Number"]||""}</span><div class="tt">${m.Title||""}</div><div class="tm">Time : ${m.Time||""}</div></div></div>${RESD.g[m["Match Key"]||k].map(x=>`<div class="row" style="padding:8px 0;border-top:1px solid #EFEFEF;margin-top:8px"><b>${x.Name||x.Username}</b><span class="mu">Kill ${x.Kill||0} · <b style="color:#398E00">${tk(x.Win)}</b></span></div>`).join("")}</div></div>`).join(""):'<p class="c mu" style="margin-top:30px">No Results Yet</p>'}catch(e){$("#ml").textContent=e.message}}
+async function refer(){await refreshMe().catch(()=>{});const c=await cfg().catch(()=>({}));const link=c["APP LINK"]||location.href;const msg=("Interested to play Tournaments? Want to make some cash out of it?? Try out ZX SPORTS, an eSports Platform. Join Now: "+link+" Use my refer code: "+me.Username).replace(/'/g,"");
+ shell(bar("Refer And Earn","go('home')")+`<div style="padding:12px"><div class="card c" style="padding:22px"><img src="assets/shares.png" style="width:60px"><h3 style="margin-top:8px">Refer & Earn</h3><p class="mu">বন্ধুকে Refer করুন, সে প্রথম Deposit (কমপক্ষে ৳100) করলে বোনাস পাবেন।</p><div class="card" style="background:#F3F0F7;margin:14px 0;padding:12px;box-shadow:none"><p class="mu">Your Refer Code</p><h2>${me["Refer Code"]||me.Username}</h2></div><p class="mu">Total Refer: <b style="color:#000">${me["Total Refer"]||0}</b></p><button style="margin-top:14px" onclick="(navigator.share?navigator.share({text:'${msg}'}):navigator.clipboard.writeText('${msg}').then(()=>toast('Copied')))">Share</button></div></div>`,1)}
+function profDetail(){shell(bar("My Profile","profileHome()")+`<div style="padding:12px"><div class="card c" style="padding:20px"><img src="assets/profiles.jpg" style="width:70px;height:70px;border-radius:50%;object-fit:cover"><h3 style="margin-top:8px">${me.Username}</h3></div>
+ <p class="sec">BASIC DETAILS</p><div class="card" style="padding:6px 14px">${[["Username",me.Username],["Email",me.Email],["Mobile",me.Number],["Registered",me.Registered],["Total Played",me["Total Played"]],["Total Refer",me["Total Refer"]]].map(x=>`<div class="row" style="padding:10px 0;border-bottom:1px solid #EFEFEF"><span class="mu">${x[0]}</span><b>${x[1]||"-"}</b></div>`).join("")}</div>
+ <p class="sec">CHANGE PASSWORD</p><div class="card" style="padding:14px"><input id="np" type="password" placeholder="New Password"><button onclick="chpw()">CHANGE PASSWORD</button></div></div>`,1,1)}
+function profileHome(){shell(`<div style="padding:12px"><div class="card c" style="padding:20px 16px"><img src="assets/profiles.jpg" style="width:64px;height:64px;border-radius:50%;object-fit:cover"><h3 style="margin-top:8px">${me.Name||me.Username}</h3>
+ <div class="row" style="margin-top:12px;text-align:center"><div style="flex:1"><b style="font-size:16px">${me["Total Played"]||0}</b><div class="mu" style="font-size:12px">Match Played</div></div><div style="flex:1"><b style="font-size:16px">BDT ${+me.Balance||0}</b><div class="mu" style="font-size:12px">Balance</div></div><div style="flex:1"><b style="font-size:16px">${+me.Winning||0}</b><div class="mu" style="font-size:12px">Won</div></div></div></div>
+ <div class="pmenu">${[["wallet","wallets","Wallet"],["withdraw","withdraws","Withdraw"],["refer","shares","Refer And Earn"],["profd","profiless","My Profile"],["rank","players","Top Players"],["dev","developers","Developer Profile"],["logout","support","Logout"]].map(x=>`<div class="pmi" onclick="pnav('${x[0]}')"><img src="assets/${x[1]}.png"><span>${x[2]}</span></div>`).join("")}</div></div>`,1)}
+function pnav(x){({wallet:()=>wallet(),withdraw:()=>payPage("WITHDRAW"),refer:()=>refer(),profd:()=>profDetail(),rank:()=>rank(),dev:()=>dev(),logout:()=>logout()})[x]()}
+async function chpw(){const p=$("#np").value;if(p.length<6)return toast("Password কমপক্ষে ৬ অক্ষর");try{await api(P.users+"/"+me._k,"PATCH",{Password:p});await refreshMe();toast("Password পরিবর্তন হয়েছে ✅");$("#np").value=""}catch(e){toast(e.message)}}
+async function dev(){const c=await cfg().catch(()=>({}));shell(bar("Developer Profile","profileHome()")+`<div style="padding:12px"><div class="card c" style="padding:22px"><img class="lg" style="margin-top:0" src="assets/app_logo.jpg"><h3>ZX SPORTS</h3><p class="mu" style="margin:8px 0 16px">যেকোন প্রয়োজনে টেলিগ্রামে যোগাযোগ করুন এবং এডমিনকে ইনবক্স করে অপেক্ষা করুন সমাধান পাবেন ইনশাআল্লাহ ।</p><a class="btn" style="display:block;text-decoration:none" href="${c["Support Group"]||"https://t.me/+Gj2-n--fbwhmYWU1"}" target="_blank">Telegram</a></div></div>`,1,1)}
+async function details(k){shell(back("render()")+'<div style="padding:12px" id="ml"><p class="c mu">Please Wait...</p></div>',1);
+ try{const m=await api(P.ff+"/"+k),mk=m["Match Key"]||k;const [js,ru]=await Promise.all([api(N.j),api(N.ru)]);const ps=Object.values(js||{}).filter(x=>x["Match Key"]==mk).sort((a,b)=>a.Position-b.Position);const mkl=Object.values(js||{}).filter(x=>x.Username==me.Username).map(x=>x["Match Key"]);
+ const rules=(ru||{})[RK[m["Match Type"]]]||"";
+ $("#ml").innerHTML=card(k,m,mkl)+(rules?`<div class="card" style="padding:14px;margin-bottom:12px"><b>Rules</b><p class="mu" style="white-space:pre-wrap;margin-top:8px">${String(rules).replace(/</g,"&lt;")}</p></div>`:"")+`<div class="card" style="padding:14px"><b>Participants (${ps.length})</b>${ps.length?ps.map((x,i)=>`<div class="row" style="padding:8px 0;border-top:1px solid #EFEFEF;margin-top:6px"><span>${i+1}. ${x.Name||x.Username}</span></div>`).join(""):'<p class="mu" style="margin-top:8px">No Participants Registered</p>'}</div>`}catch(e){$("#ml").textContent=e.message}}
+function joinPage(k){shell(back(`details('${k}')`)+`<div style="padding:12px"><div class="card" style="padding:16px"><h3>Join Match</h3><input id="pn" placeholder="Free Fire In-game Name"><button style="margin-top:8px" onclick="join('${k}')">Confirm & Pay</button></div></div>`,1)}
+function render(){if(!me)return auth();(({home,my,results,profile:profileHome})[tab]||home)()}
+
+document.body.insertAdjacentHTML("beforeend",'<div class="spl" id="spl"><img src="assets/app_logo.jpg"><b>ZX SPORTS</b><small>1.0</small></div>');
+setTimeout(()=>{const s=document.getElementById("spl");s.style.opacity=0;setTimeout(()=>s.remove(),450)},1300);
+function dlg(html,ok="Okay",col="#F67C01",fn=""){const d=document.createElement("div");d.className="dlg";d.innerHTML=`<div>${html}<div class="ok" style="background:${col}" id="dok">${ok}</div></div>`;document.body.appendChild(d);d.querySelector("#dok").onclick=()=>{d.remove();fn&&fn()}}
+function banScreen(){$("#app").innerHTML=`<div class="c" style="background:#fff;min-height:100vh;padding:70px 26px"><img src="assets/reject.png" style="width:120px"><p style="color:#757575;margin:16px 0 8px">Dear, ${me?me.Username:""}</p><p style="color:#E53935;line-height:1.6">Your account has been suspended for not following our rules and regulations. For further information please massage us from telegram.</p><div style="background:#2196F3;color:#fff;font-weight:700;border-radius:8px;padding:13px;margin-top:26px;cursor:pointer" onclick="window.open('https://t.me/+Gj2-n--fbwhmYWU1')">O k a y</div></div>`}
+async function guard(){try{const c=await cfg();if(c.Application=="OFF"){dlg(`<img src="assets/warning.png"><h3 style="color:#F44336">APP CLOSED</h3><p style="margin:8px 0">${c.Notice||c.Message||"App is currently closed."}</p>`,"CLOSE","#9E9E9E",()=>{document.body.innerHTML='<div style="text-align:center;padding:100px 20px;font-family:sans-serif">App Closed</div>'});return}
+ if(me&&!sessionStorage.zx_n&&c.Notice){sessionStorage.zx_n=1;dlg(`<p style="line-height:1.6">${String(c.Notice).replace(/</g,"&lt;")}</p>`)}}catch(e){}}
+const _home=home;home=async function(){await _home();guard()};
+const HOW2={Bkash:"*247# ডায়াল করে আপনার BKASH মোবাইল মেনুতে যান অথবা BKASH অ্যাপ এ যান ।",Nagad:"*167# ডায়াল করে আপনার NAGAD মোবাইল মেনুতে যান অথবা NAGAD অ্যাপ এ যান ।",Rocket:"*322# ডায়াল করে আপনার Rocket মোবাইল মেনুতে যান অথবা Rocket অ্যাপ এ যান ।"};
+const MN=[["Bkash","bkash","bKash"],["Rocket","rocket","Rocket"],["Nagad","nagad","Nagad"]];
+function mthPick(v){$("#mt").value=v;document.querySelectorAll(".mth div").forEach(d=>d.classList.toggle("on",d.dataset.v==v));if($("#hw"))mtc()}
+async function tx(t){const c=await cfg().catch(()=>({}));NUMS={Bkash:c["Bkash Number"],Nagad:c["Nagad Number"],Rocket:c["Rocket Number"]};const D=t=="DEPOSIT";await refreshMe().catch(()=>{});
+ $("#tx").innerHTML=`<div class="av"><img src="assets/money.png"><div><small>${D?"Available Amount":"Winning Amount"}</small><h2>৳ ${D?(+me.Balance||0):(+me.Winning||0)}</h2></div></div>
+ <input type="hidden" id="mt" value="Bkash"><div class="mth">${MN.map((m,i)=>`<div class="${i?"":"on"}" data-v="${m[0]}" onclick="mthPick('${m[0]}')"><img class="ck" src="assets/check.png"><img class="l" src="assets/${m[1]}.png">${m[2]}</div>`).join("")}</div>
+ ${D?`<div class="ins" id="hw"></div><input id="tid" placeholder="ট্রান্সজেকশন আইডি দিন"><input id="am" type="number" placeholder="টাকার পরিমাণ দিন"><p class="mu" style="margin:4px 0 10px">Minimum Deposit ৳${c["Minimum Deposit"]||"-"}</p>`
+ :`<input id="nu" placeholder="আপনার মোবাইল নম্বর" inputmode="numeric"><input id="am" type="number" placeholder="টাকার পরিমাণ দিন"><p class="mu" style="margin:4px 0 10px">Minimum Withdrawal amount is ${c["Minimum Withdraw"]||"-"}</p>`}
+ <button style="padding:14px;background:${D?"#674FA3":"#E91E63"}" onclick="${D?"deposit()":"withdraw()"}">${D?"VERIFY":"WITHDRAW"}</button>`;if(D)mtc()}
+function mtc(){const e=$("#hw");if(!e)return;const m=$("#mt").value,n=NUMS[m]||"Loading...";e.innerHTML=`⚪ ${HOW2[m]}<br>⚪ <span class="y">Send Money</span> - এ ক্লিক করুন ।<br>⚪ প্রাপক নম্বর হিসাবে নিচের এই নম্বরটি দিন:<br><span class="y" style="font-size:18px">${n}</span><span class="cp" onclick="navigator.clipboard.writeText('${n}');toast('Copied')"><img src="assets/copy.png">Copy</span><br>⚪ নিশ্চিত করতে আপনার ${m.toUpperCase()} মোবাইল মেনু পিন দিন ।<br>⚪ এখন উপরের বক্সে আপনার Transaction ID দিন আর নিচের VERIFY বাটন এ ক্লিক করুন ।`}
+async function deposit(){const m=$("#mt").value,trx=$("#tid").value.trim();if(!trx)return toast("Transaction ID দিন");
+ try{await refreshMe();if(await api(N.used+"/"+m+trx))return toast("এই Transaction ID আগেই ব্যবহার করা হয়েছে!");
+ const p=await api(N.pay+"/"+trx),T={Bkash:"B",Nagad:"N",Rocket:"R"}[m];if(!p||p.type!=T)return toast("Transaction ID পাওয়া যায়নি!");const amt=+p.amount,c=await cfg();
+ if(amt<(+c["Minimum Deposit"]||0))return toast("Minimum Deposit ৳"+c["Minimum Deposit"]);
+ await api(N.used+"/"+m+trx,"PUT",{txid:m+trx});await api(N.pay+"/"+trx,"DELETE");
+ const td=+me["Total Deposit"]||0;
+ await api(N.am+"/"+trx,"PUT",{Username:me.Username,Number:me.Number||"",Method:m,Amount:String(amt),Status:"Success",TrxID:trx,Time:new Date().toLocaleString("en-GB",{hour12:true}).replace(",",""),Position:String(td+1)});
+ await api(P.users+"/"+me._k,"PATCH",{Balance:String((+me.Balance||0)+amt),"Total Deposit":String(td+1),DEPOSIT:"YES"});
+ if(me["Reffer Account"]=="YES"&&td==0&&amt>=100&&me["Used Code"]){const r=await findUser(me["Used Code"]);if(r)await api(P.users+"/"+r._k,"PATCH",{Balance:String((+r.Balance||0)+10)})}
+ await refreshMe();toast("Deposit সফল: ৳"+amt+" ✅");wallet()}catch(e){toast(e.message)}}
+async function wallet(){await refreshMe().catch(()=>{});const b=+me.Balance||0,w=+me.Winning||0,c=await cfg().catch(()=>({}));
+ const V=[["HOW TO ADD MONEY?","কিভাবে টাকা অ্যাড করবেন?",c.Video1],["HOW TO COLLECT ROOM ID?","কিভাবে রুম আইডি পাবেন?",c.Video2]].filter(x=>x[2]);
+ shell(bar("Wallet","profileHome()")+`<div style="padding:12px"><div class="wb"><div class="x"><small>TOTAL CASH BALANCE</small><h2>BDT ${b+w}</h2></div><div class="mu c" style="font-size:12px;cursor:pointer" onclick="history()">View Transaction<br>History ›</div></div>
+ <div class="wb"><img class="i" src="assets/ic_box_2.png"><div class="x"><small>WINNING CASH BALANCE</small><h2>BDT ${w}</h2></div><button class="pb" onclick="payPage('WITHDRAW')">WITHDRAW</button></div>
+ <div class="wb"><img class="i" src="assets/ic_box_3.png"><div class="x"><small>DEPOSIT CASH BALANCE</small><h2>BDT ${b}</h2></div><button class="pb" onclick="payPage('DEPOSIT')">＋ ADD MORE</button></div>
+ <div class="wb"><img class="i" src="assets/ic_box_1.png"><div class="x"><small>REFER AND EARN</small></div><button class="pb" onclick="refer()">REFER &amp; EARN</button></div>
+ ${V.map(v=>`<div class="vd"><img src="assets/ic_play_circle_fill_black.png"><div class="x"><small>${v[0]}</small><div style="font-weight:700">${v[1]}</div></div><a class="pb" style="text-decoration:none" href="${v[2]}" target="_blank">ভিডিওটি দেখুন</a></div>`).join("")}</div>`,1,1)}
+async function rank(){shell(bar("TOP PLAYERS","profileHome()","rank()")+'<div class="lbh"><span>Sl No.</span><span>Name</span><span>Amount</span></div><div id="ml" class="mu c" style="padding:12px">Please Wait...</div>',1,1);
+ try{const u=Object.values(await api(P.users)||{}).sort((a,b)=>(+(b["Total Winning"]||b.Winning)||0)-(+(a["Total Winning"]||a.Winning)||0)).slice(0,50);
+ $("#ml").outerHTML=u.map((x,i)=>`<div class="lbr"><span>${i+1}</span><span>${x.Username}</span><span>${+(x["Total Winning"]||x.Winning)||0} TK</span></div>`).join("")}catch(e){$("#ml").textContent=e.message}}
+let HT="am";
+async function history(t){if(t)HT=t;shell(bar("M Y   H I S T O R Y","wallet()","history()")+`<div style="padding:12px"><div class="tabs">${[["am","Add Money"],["st","Match Entry"],["wd","Withdraw Transaction"]].map(x=>`<div class="${HT==x[0]?"on":""}" onclick="history('${x[0]}')">${x[1]}</div>`).join("")}</div><div id="ml" class="mu c">Please Wait...</div></div>`,1,1);
+ try{const o=await api(N[HT]);const L=Object.values(o||{}).filter(x=>x.Username==me.Username).sort((a,b)=>(+b.Position||0)-(+a.Position||0));
+ const col={success:"#4CAF50",pending:"#F67C01",rejected:"#E53935"};
+ $("#ml").outerHTML=L.length?L.map((x,i)=>{const s=String(x.Status||"success").toLowerCase();return HT=="st"?`<div class="tr"><span class="n">${L.length-i}</span><div class="x"><b>${x.Title||""}</b><div class="mu">Match #${x["Match Number"]||""}</div><div class="mu" style="font-size:12px">${x.Time||""}</div></div><div style="text-align:right"><div class="am" style="color:#E53935">TK ${x["Entry Fee"]||0}</div><div style="color:#E53935;font-size:12px">- debited</div></div></div>`
+ :`<div class="tr"><span class="n">${x.Position||L.length-i}</span><div class="x"><div class="am">TK ${x.Amount}</div><div class="mu" style="font-size:12px">${x.Time||""}</div><div style="color:#273238;font-size:12px">TxnID : ${x.TrxID||""}</div></div><div style="text-align:right"><span class="m">${x.Method||""}</span><div style="color:${col[s]||"#757575"};font-size:12px;margin-top:6px">${s=="success"?(HT=="am"?"+ credited":"- debited"):s}</div></div></div>`}).join(""):'<p class="c mu" style="margin-top:30px">No History Found</p>'}catch(e){$("#ml").textContent=e.message}}
+async function details(k){shell(bar("Details Page","render()")+'<div style="padding:14px" id="ml"><p class="c mu">Please Wait...</p></div>',1,1);
+ try{const m=await api(P.ff+"/"+k),mk=m["Match Key"]||k;const [js,ru]=await Promise.all([api(N.j),api(N.ru)]);const ps=Object.values(js||{}).filter(x=>x["Match Key"]==mk).sort((a,b)=>a.Position-b.Position);const joined=m[me.Username]=="TRUE";
+ const rules=(ru||{})[RK[m["Match Type"]]]||"";const kv=(a,b)=>`<div class="kv"><span>${a}:</span><b>${b}</b></div>`;
+ const roomOk=joined&&m.hasOwnProperty("Room ID")&&m.hasOwnProperty("Room Pass")&&!(m["Room ID"]=="FALSE"&&m["Room Pass"]=="FALSE");
+ $("#ml").innerHTML=`<h3 style="color:#000">${m.Title||""}</h3>${kv("Type",m["Entry Type"]||"-")}${kv("Version",m.Version||"-")}${kv("Map",m["Play Map"]||"-")}${kv("Match Type",+m["Entry Fee"]?"Paid":"Free")}${kv("Entry Fee",(m["Entry Fee"]||0)+" TK")}${kv("Match Schedule",m.Time||"-")}
+ <h3 style="margin:14px 0 4px;color:#000">Prize Details</h3>${kv("Winning Prize",(m["Win Prize"]||0)+" TK")}${kv("Per Kill",(m["Per Kill"]||0)+" TK")}
+ ${roomOk?`<div class="pl">Room ID - <b>${m["Room ID"]}</b><br>Room Password - <b>${m["Room Pass"]}</b></div>`:`<div class="dsh">Room Details Will Be Shared Before 8-10 Minutes Of Match Start Time.</div>`}
+ <hr class="dl"><h3 style="color:#000">Match Instructions And Rules</h3><p style="white-space:pre-wrap;margin-top:8px;color:#000;line-height:1.6">${rules?String(rules).replace(/</g,"&lt;"):"Rules Is Loading..."}</p><hr class="dl">
+ <h3 style="color:#000">Registered Participants</h3>${ps.length?ps.map((x,i)=>`<div class="pl">${i+1}. ${x.Name||x.Username}</div>`).join(""):'<p class="mu" style="margin-top:8px">No Participants Registered</p>'}`}catch(e){$("#ml").textContent=e.message}}
+let JS={};
+const ENTRY_N={Solo:1,Duo:2,Squad:4};
+async function joinPage(k){shell(back("render()")+'<div id="ml" class="c mu" style="padding:20px">Please Wait...</div>',1,1);
+ try{cfg().catch(()=>{});const m=await api(P.ff+"/"+k);
+ const et=m["Entry Type"];const chips=et=="Duo"?["Solo","Duo"]:et=="Squad"?["Solo","Duo","Squad"]:["Solo"];
+ JS={k,m,chips,entry:null,names:[]};joinStep(1)}catch(e){toast(e.message)}}
+function jrow(m,feeLabel,fee){return `<div class="card" style="padding:14px;margin:12px 12px 0"><b style="color:#48454E">${m.Title||""} | ${m.Version||""}</b><p style="color:#424242;margin:4px 0;font-size:14px">Time : ${m.Time||""}</p>
+ <div class="row" style="font-size:14px"><span>Win Prize : ${m["Win Prize"]||0}</span><span>${feeLabel} : ${fee}</span></div><hr class="dl" style="margin:10px 0 0">
+ <p style="color:#E47F19;font-weight:700;font-size:13px;text-align:center;margin:10px 0 4px;line-height:1.6">*অবশ্যই এখানে আপনার গেমের নামটি দিয়ে জয়েন করবেন</p></div>`}
+function selectEntry(t){JS.entry=t;joinStep(1)}
+function joinStep(s){const {k,m,chips}=JS;const n=JS.entry?ENTRY_N[JS.entry]:0,fee=JS.entry?(+m["Entry Fee"]||0)*n:(+m["Entry Fee"]||0);
+ if(s==1)shell(back("render()")+jrow(m,"Entry Fee",fee)+
+ `<div style="padding:0 12px"><div style="display:flex;justify-content:center;gap:12px;margin-bottom:14px">${chips.map(c=>`<div class="echip ${JS.entry==c?"on":""}" onclick="selectEntry('${c}')">${c}</div>`).join("")}</div>
+ ${n?Array.from({length:n},(_,i)=>`<input class="pi" placeholder="Player ${i+1} Name" value="${(JS.names[i]||"").replace(/"/g,"")}">`).join(""):""}<div style="height:80px"></div></div>
+ <div class="fixbtn"><button onclick="joinReview()">Join Now!</button></div>`,1,1);
+ if(s==2)shell(back("joinStep(1)")+jrow(m,"Entry Fee",fee)+`<div style="padding:0 12px">${JS.names.map((x,i)=>`<div class="pl">Player ${i+1} : ${x}</div>`).join("")}<div style="display:flex;gap:10px;margin-top:12px"><button class="g" style="padding:14px" onclick="joinStep(1)">Edit Players</button><button style="padding:14px" onclick="join('${k}')">Corfirm And Pay</button></div></div>`,1,1);
+ if(s==3){const c=CFG||{};const grp=c["Support Group"]&&String(c["Support Group"]).startsWith("https://")?c["Support Group"]:"";
+ shell(`<div class="c" style="padding:40px 20px 10px"><img src="assets/mark.png" style="width:80px"><h3 style="margin:14px 0">Thank You For Your Reservation</h3></div>`+jrow(m,"Paid",fee).replace("Win Prize :","Total Win Prize :")+
+ `<div style="padding:0 12px">${JS.names.map((x,i)=>`<div class="pl">Player ${i+1} : ${x}</div>`).join("")}<p class="mu" style="font-size:12px;margin:10px 0;line-height:1.6">Disclaimer : You Have To Follow All The Rules And Regulation Otherwise You'll Be Banned</p>
+ ${grp?`<a class="btn" style="display:block;text-decoration:none;background:#F67C01;margin-bottom:10px" href="${grp}" target="_blank">Click Here To Join Group</a>`:""}
+ <button style="padding:14px" onclick="go('home')">Done</button></div>`,1,1)}}
+function joinReview(){if(!JS.entry)return toast("Choose A Valid Option");const v=[...document.querySelectorAll(".pi")].map(x=>x.value.trim());if(v.some(x=>!x))return toast("This Field Is Required");JS.names=v;joinStep(2)}
+async function join(k){try{const names=JS.names,name=names[0];await refreshMe();const m=await api(P.ff+"/"+k),mk=m["Match Key"]||k;
+ const n=ENTRY_N[JS.entry]||1,fee=(+m["Entry Fee"]||0)*n,bal=+me.Balance||0,win=+me.Winning||0,need=+m["Player Need"]||0,joinedNow=+m["Player Join"]||0;
+ if(m[me.Username]=="TRUE")return toast("আগেই Join করেছেন");if(joinedNow>=need)return toast("Match Full");
+ if(bal+win<fee)return toast("Insufficient Balance");
+ const fromB=Math.min(bal,fee),fromW=fee-fromB,jk=kid(),hk=kid(),pos=joinedNow+1;const rec={Name:name,Username:me.Username,Key:jk,"History Key":hk,"Match Key":mk,Position:String(pos),FcmID:"web"};names.slice(1).forEach((x,i)=>rec["Name"+(i+2)]=x);
+ await api(N.j+"/"+jk,"PUT",rec);
+ await api(N.st+"/"+hk,"PUT",{Title:m.Title||"",Username:me.Username,"Entry Fee":String(fee),Win:"0","Match Number":m["Match Number"]||"","Statistics Key":hk,Time:new Date().toLocaleString("en-CA",{hour12:true}),Position:String((+me["Total Played"]||0)+1)});
+ const ffPatch={"Player Join":String(pos)};ffPatch[me.Username]="TRUE";
+ await api(P.ff+"/"+k,"PATCH",ffPatch);
+ await api(P.users+"/"+me._k,"PATCH",{Balance:String(bal-fromB),Winning:String(win-fromW),"Total Played":String((+me["Total Played"]||0)+1),STATISTICS:"YES"});
+ await refreshMe();JS.m={...m,...ffPatch};toast("Successfully Joined");joinStep(3)}catch(e){toast(e.message)}}
+async function refer(){await refreshMe().catch(()=>{});const c=await cfg().catch(()=>({}));const link=c["APP LINK"]||location.href;const msg=("Interested to play Tournaments? Want to make some cash out of it?? Try out ZX SPORTS, an eSports Platform. Join Now: "+link+" Use my refer code: "+me.Username).replace(/'/g,"");
+ shell(bar("Refer And Earn","profileHome()")+`<div style="padding:12px" class="c"><img src="assets/refer.png" style="width:110px;height:110px;border-radius:50%;object-fit:cover;margin-top:10px"><div class="rf"><h3>REFER MORE TO EARN MORE!</h3><p>আপনি যখন কাউকে আপনার রেফার কোড দিয়ে রেফার করবেন তখন নতুন ইউজার যদি প্রথমবার ১০০ টাকা বা তার বেশি ডিপোজিট করে তাহলে আপনি ১০ টাকা পাবেন</p></div>
+ <div class="card" style="padding:14px"><small class="mu">YOUR REFER CODE</small><h2 style="margin-top:4px">${me["Refer Code"]||me.Username}</h2></div><div class="pbtn" style="margin-top:14px" onclick="(navigator.share?navigator.share({text:'${msg}'}):navigator.clipboard.writeText('${msg}').then(()=>toast('Copied')))"><img src="assets/rules.png" style="border-radius:4px">REFER NOW</div></div>`,1,1)}
+render();
+</script></body></html>
